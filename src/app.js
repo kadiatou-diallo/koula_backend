@@ -29,6 +29,7 @@ const allowedOrigins = [
   'http://localhost:8081',
   'http://172.20.10.2:8082',
   'https://sparkling-glade-3839.pages.dev',
+  'https://koula-backend-eight.vercel.app'
 ];
 
 const corsOptions = {
@@ -128,13 +129,14 @@ app.get('/api/debug-env', (req, res) => res.json({
 app.use('/api/users',           userRoutes);
 app.use('/api/transactions',    TransactionRoute);
 app.use('/api/transactions',    PastTransactionRoute);
+app.use('/api/transactions', dateRangeRoutes);   // ← AJOUT
 app.use('/api/recent',          RecentTransactionRoutes);
 app.use('/api/account-lines',   AccountLines);
 app.use('/api/accountype',      AccountTypes);
 app.use('/api/partner-balance', partner);
 app.use('/api/cumul', cumulRoutes);
 app.use('/api/notifications', notificationRoutes);
-app.use('/api/transactions', dateRangeRoutes);   // ← AJOUT
+
 
 app.get('/api/test-auth', (req, res) => res.json({
   message: 'Route accessible',

@@ -28,6 +28,7 @@ model User {
   transactionsRecues         Transaction[]         @relation("TransactionDestinataire")
   transactionsEnvoyees       Transaction[]         @relation("TransactionEnvoyeur")
   transactionsPartenaire     Transaction[]         @relation("TransactionPartenaire")
+  cumulMovements             CumulMovement[]
 
   @@map("users")
 }
@@ -193,6 +194,19 @@ model DailySnapshot {
   @@index([date])
   @@index([userId, date])
   @@map("daily_snapshots")
+}
+model CumulMovement {
+  id          String   @id @default(cuid())
+  type        String   // "DEPOT" ou "RETRAIT"
+  montant     BigInt   // en centimes, comme le reste du schéma, toujours positif
+  commentaire String?
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull, map: "cumul_movement_created_by_fkey")
+
+  @@index([createdAt])
+  @@map("cumul_movements")
 }
 model SystemConfig {
   id        String   @id @default(cuid())

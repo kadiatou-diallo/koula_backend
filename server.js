@@ -4,7 +4,7 @@ config({ override: true });
 // Maintenant importer l'app
 import app from './src/app.js';
 
-const PORT = process.env.PORT || 3000;
+const PORT = 4000;
 
 // Pour Vercel, ne pas utiliser app.listen() en production
 if (process.env.NODE_ENV !== 'production') {
